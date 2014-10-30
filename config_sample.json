@@ -1,0 +1,11 @@
+{
+  "conString": "",
+  "nest": {
+    "username": "",
+    "password": "",
+    "serial": ""
+  },
+  "wunderground": {
+    "token": ""
+  }
+}

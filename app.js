@@ -10,6 +10,7 @@ async.waterfall([
     function connectDb(next) {
       pg.connect(conString, function(err, client, done) {
         if(err) {
+          // console.log('error fetching client from pool', err);
           next('error fetching client from pool', err);
         } else {
           next(null, client); 
