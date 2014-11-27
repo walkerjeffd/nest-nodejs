@@ -1,7 +1,7 @@
 var pg = require('pg'),
     async = require('async'),
     request = require('superagent'),
-    config = require('./config');
+    config = require('../config');
     
 var nest = require('nest-thermostat').init(config.nest.username, config.nest.password);
 var conString = config.conString;
