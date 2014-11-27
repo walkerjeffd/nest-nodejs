@@ -1,3 +1,3 @@
 #!/bin/bash
 
-nodejs /home/jeff/Projects/nest-nodejs/app.js >> /home/jeff/Projects/nest-nodejs/log.txt
+nodejs /home/jeff/Projects/nest-nodejs/fetcher/app.js >> /home/jeff/Projects/nest-nodejs/fetcher/log.txt
