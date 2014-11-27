@@ -3,8 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <title>Nest</title>
+  <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap-theme.css">
 </head>
 <body>
-  <h1>Hello World</h1>
+<div class="container">
+  <div id="vis"></div>
+</div>
+<script src="/libs/jquery/dist/jquery.js"></script>
+<script src="/libs/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/libs/d3/d3.js"></script>
+<script src="/libs/vega/vega.js"></script>
+<script>
+var spec = {
+  "width": 1000,
+  "height": 400,
+  "data": [
+    {
+      "name": "nest",
+      "url": "/data?days=7",
+      "format": {"type": "json", "parse": {"datetime":"date"}}
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "time",
+      "range": "width",
+      "domain": {"data": "nest", "field": "data.datetime"}
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "range": "height",
+      "nice": true,
+      "zero": false,
+      "domain": {"data": "nest", "field": "data.temp_indoor"},
+      "domainMin": 30
+    },
+    {
+      "name": "color", "type": "ordinal", "range": "category10"
+    }
+  ],
+  "axes": [
+    {"type": "x", "scale": "x", "tickSizeEnd": 0},
+    {"type": "y", "scale": "y"}
+  ],
+  "marks": [
+    {
+      "type": "line",
+      "from": {
+        "data": "nest"
+      },
+      "properties": {
+        "enter": {
+          "x": {"scale": "x", "field": "data.datetime"},
+          "y": {"scale": "y", "field": "data.temp_indoor"},
+          "stroke": {"value": "orangered"},
+          "strokeWidth": {"value": 1}
+        }
+      }
+    },
+
+    {
+      "type": "line",
+      "from": {
+        "data": "nest"
+      },
+      "properties": {
+        "enter": {
+          "x": {"scale": "x", "field": "data.datetime"},
+          "y": {"scale": "y", "field": "data.temp_outdoor"},
+          "stroke": {"value": "steelblue"},
+          "strokeWidth": {"value": 1}
+        }
+      }
+    },
+
+    {
+      "type": "line",
+      "from": {
+        "data": "nest"
+      },
+      "properties": {
+        "enter": {
+          "x": {"scale": "x", "field": "data.datetime"},
+          "y": {"scale": "y", "field": "data.temp_target"},
+          "stroke": {"value": "green"},
+          "strokeWidth": {"value": 1}
+        }
+      }
+    }
+    // {
+    //   "type": "group",
+    //   "from": {
+    //     "data": "nest",
+    //     "transform": [{"type": "facet", "keys": ["data.symbol"]}]
+    //   },
+    //   "marks": [
+    //     {
+    //       "type": "line",
+    //       "properties": {
+    //         "enter": {
+    //           "x": {"scale": "x", "field": "data.date"},
+    //           "y": {"scale": "y", "field": "data.price"},
+    //           "stroke": {"scale": "color", "field": "data.symbol"},
+    //           "strokeWidth": {"value": 2}
+    //         }
+    //       }
+    //     },
+    //     {
+    //       "type": "text",
+    //       "from": {
+    //         "transform": [{"type": "filter", "test": "index==data.length-1"}]
+    //       },
+    //       "properties": {
+    //         "enter": {
+    //           "x": {"scale": "x", "field": "data.date", "offset": 2},
+    //           "y": {"scale": "y", "field": "data.price"},
+    //           "fill": {"scale": "color", "field": "data.symbol"},
+    //           "text": {"field": "data.symbol"},
+    //           "baseline": {"value": "middle"}
+    //         }
+    //       }
+    //     }
+    //   ]
+    // }
+  ]
+};
+vg.parse.spec(spec, function(chart) { chart({el:"#vis"}).update(); });
+</script>
 </body>
 </html>
